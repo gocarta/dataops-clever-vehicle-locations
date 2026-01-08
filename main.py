@@ -39,29 +39,33 @@ for i in range(math.ceil(len(rts) / page_size)):
     }
     response = requests.get(url, params=params)
     data = response.json()
-    for bus in data["bustime-response"]["vehicle"]:
-        # 20260107 21:48
-        tmstmp = bus["tmstmp"]
+    bustime_response = data["bustime-response"]
 
-        dt = datetime.strptime(tmstmp, "%Y%m%d %H:%M")
-        dt = dt.replace(tzinfo=tzinfo)
-        timestamp = dt.isoformat()
+    # sometime vehicle is not in bustime_response if a bus is no longer running
+    if "vehicle" in bustime_response:
+        for bus in bustime_response["vehicle"]:
+            # 20260107 21:48
+            tmstmp = bus["tmstmp"]
 
-        results.append(
-            {
-                "vehicle_id": bus["vid"],
-                "route": bus["rt"],
-                # "delayed": bus["dly"],
-                "destination": bus["des"],
-                # "heading": bus["hdg"],
-                "latitude": float(bus["lat"]),
-                "longitude": float(bus["lon"]),
-                # "mode": bus["mode"],
-                # "path_id": bus["pid"],
-                # "speed": float(bus["spd"])
-                "timestamp": timestamp,
-            }
-        )
+            dt = datetime.strptime(tmstmp, "%Y%m%d %H:%M")
+            dt = dt.replace(tzinfo=tzinfo)
+            timestamp = dt.isoformat()
+
+            results.append(
+                {
+                    "vehicle_id": bus["vid"],
+                    "route": bus["rt"],
+                    # "delayed": bus["dly"],
+                    "destination": bus["des"],
+                    # "heading": bus["hdg"],
+                    "latitude": float(bus["lat"]),
+                    "longitude": float(bus["lon"]),
+                    # "mode": bus["mode"],
+                    # "path_id": bus["pid"],
+                    # "speed": float(bus["spd"])
+                    "timestamp": timestamp,
+                }
+            )
 
 # client for data store
 client = datablob.DataBlobClient(
