@@ -1,5 +1,11 @@
-# dataops-vehicles-current
+# dataops-clever-vehicle-locations
 > Near Real-Time Location of all [CARTA](https://www.gocarta.org/) Buses and Shuttles
+
+## background
+Data access is important to us at CARTA and we built this pipeline to make it easier to access data about the locations of our buses and shuttles.  This data pipeline basically pulls the vehicle location data from the Clever Devices BusTime API hosted by CARTA and then converts it into user-friendly formats, CSV and JSON.  We'll continue to add more formats, but let us know if you have one you'd like to see.
+
+## frequency
+The pipeline runs every minute.
 
 ## columns
 | column | example | description |
