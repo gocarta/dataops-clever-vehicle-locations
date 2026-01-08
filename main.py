@@ -28,48 +28,45 @@ data = response.json()
 rts = [route["rt"] for route in data["bustime-response"]["routes"]]
 print("[dataops-clever-vehicle-locations] got routes:", rts)
 
-for i in range(1000):
-    results = []
-    page_size = 10
-    for i in range(math.ceil(len(rts) / page_size)):
-        print("[dataops-clever-vehicle-locations] sleeping 10 seconds")
-        sleep(10)
-        url = "https://bustracker.gocarta.org/bustime/api/v3/getvehicles"
-        params = {
-            "format": "json",
-            "key": CLEVER_BUS_TIME_API_KEY,
-            "rt": ",".join(rts[i * page_size : (i + 1) * page_size]),
-        }
-        response = requests.get(url, params=params)
-        data = response.json()
-        for bus in data["bustime-response"]["vehicle"]:
-            # 20260107 21:48
-            tmstmp = bus["tmstmp"]
+results = []
+page_size = 10
+for i in range(math.ceil(len(rts) / page_size)):
+    url = "https://bustracker.gocarta.org/bustime/api/v3/getvehicles"
+    params = {
+        "format": "json",
+        "key": CLEVER_BUS_TIME_API_KEY,
+        "rt": ",".join(rts[i * page_size : (i + 1) * page_size]),
+    }
+    response = requests.get(url, params=params)
+    data = response.json()
+    for bus in data["bustime-response"]["vehicle"]:
+        # 20260107 21:48
+        tmstmp = bus["tmstmp"]
 
-            dt = datetime.strptime(tmstmp, "%Y%m%d %H:%M")
-            dt = dt.replace(tzinfo=tzinfo)
-            timestamp = dt.isoformat()
+        dt = datetime.strptime(tmstmp, "%Y%m%d %H:%M")
+        dt = dt.replace(tzinfo=tzinfo)
+        timestamp = dt.isoformat()
 
-            results.append(
-                {
-                    "vehicle_id": bus["vid"],
-                    "route": bus["rt"],
-                    # "delayed": bus["dly"],
-                    "destination": bus["des"],
-                    # "heading": bus["hdg"],
-                    "latitude": float(bus["lat"]),
-                    "longitude": float(bus["lon"]),
-                    # "mode": bus["mode"],
-                    # "path_id": bus["pid"],
-                    # "speed": float(bus["spd"])
-                    "timestamp": timestamp,
-                }
-            )
+        results.append(
+            {
+                "vehicle_id": bus["vid"],
+                "route": bus["rt"],
+                # "delayed": bus["dly"],
+                "destination": bus["des"],
+                # "heading": bus["hdg"],
+                "latitude": float(bus["lat"]),
+                "longitude": float(bus["lon"]),
+                # "mode": bus["mode"],
+                # "path_id": bus["pid"],
+                # "speed": float(bus["spd"])
+                "timestamp": timestamp,
+            }
+        )
 
-    # client for data store
-    client = datablob.DataBlobClient(
-        bucket_name=AWS_BUCKET_NAME, bucket_path=AWS_BUCKET_PATH
-    )
+# client for data store
+client = datablob.DataBlobClient(
+    bucket_name=AWS_BUCKET_NAME, bucket_path=AWS_BUCKET_PATH
+)
 
-    client.update_dataset(name="clever_vehicle_locations", version="1", data=results)
-    print(f"[dataops-clever-vehicle-locations] updated {len(results)} rows")
+client.update_dataset(name="clever_vehicle_locations", version="1", data=results)
+print(f"[dataops-clever-vehicle-locations] updated {len(results)} rows")
