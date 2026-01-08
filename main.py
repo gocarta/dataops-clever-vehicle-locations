@@ -28,13 +28,12 @@ data = response.json()
 rts = [route["rt"] for route in data["bustime-response"]["routes"]]
 print("[dataops-clever-vehicle-locations] got routes:", rts)
 
-for i in range(240):
-    print("[dataops-clever-vehicle-locations] sleeping 5 seconds")
-    sleep(5)
-
+for i in range(1000):
     results = []
     page_size = 10
     for i in range(math.ceil(len(rts) / page_size)):
+        print("[dataops-clever-vehicle-locations] sleeping 10 seconds")
+        sleep(10)
         url = "https://bustracker.gocarta.org/bustime/api/v3/getvehicles"
         params = {
             "format": "json",
