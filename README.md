@@ -20,7 +20,11 @@ The pipeline runs every minute.
 ## download links
 - [metadata](https://gocarta.s3.us-east-2.amazonaws.com/public/data/clever_vehicle_locations/v1/meta.json)
 - [csv](https://gocarta.s3.us-east-2.amazonaws.com/public/data/clever_vehicle_locations/v1/data.csv)
+- [geojson (points)](https://gocarta.s3.us-east-2.amazonaws.com/public/data/clever_vehicle_locations/v1/data.points.geojson)
 - [json](https://gocarta.s3.us-east-2.amazonaws.com/public/data/clever_vehicle_locations/v1/data.json)
+
+## preview links
+You can view the dataset on geojson.io [here](https://geojson.io/#data=data:text/x-url,https://gocarta.s3.us-east-2.amazonaws.com/public/data/clever_vehicle_locations/v1/data.points.geojson).
 
 ## support
 Post an issue [here](https://github.com/gocarta/dataops-clever-vehicle-locations/issues) or email the package author at DanielDufour@gocarta.org.
