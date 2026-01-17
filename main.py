@@ -72,5 +72,5 @@ client = datablob.DataBlobClient(
     bucket_name=AWS_BUCKET_NAME, bucket_path=AWS_BUCKET_PATH
 )
 
-client.update_dataset(name="clever_vehicle_locations", version="1", data=results)
+client.update_dataset(name="clever_vehicle_locations", version="1", data=results, latitude_key="latitude", longitude_key="longitude")
 print(f"[dataops-clever-vehicle-locations] updated {len(results)} rows")
