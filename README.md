@@ -24,7 +24,8 @@ The pipeline runs every minute.
 - [json](https://gocarta.s3.us-east-2.amazonaws.com/public/data/clever_vehicle_locations/v1/data.json)
 
 ## preview links
-You can view the dataset on geojson.io [here](https://geojson.io/#data=data:text/x-url,https://gocarta.s3.us-east-2.amazonaws.com/public/data/clever_vehicle_locations/v1/data.points.geojson).
+- You can view the dataset on a map using [geojson.io](https://geojson.io/#data=data:text/x-url,https://gocarta.s3.us-east-2.amazonaws.com/public/data/clever_vehicle_locations/v1/data.points.geojson).
+- You can query the data with SQL using [duckdb](https://shell.duckdb.org/#queries=v0,CREATE-TABLE-dataset-AS-SELECT-*-FROM-'s3://gocarta/public/data/clever_vehicle_locations/v1/data.csv'~,Describe-dataset~).
 
 ## support
 Post an issue [here](https://github.com/gocarta/dataops-clever-vehicle-locations/issues) or email the package author at DanielDufour@gocarta.org.
