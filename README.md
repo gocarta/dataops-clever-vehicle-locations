@@ -21,11 +21,12 @@ The pipeline runs every minute.
 - [metadata](https://gocarta.s3.us-east-2.amazonaws.com/public/data/clever_vehicle_locations/v1/meta.json)
 - [csv](https://gocarta.s3.us-east-2.amazonaws.com/public/data/clever_vehicle_locations/v1/data.csv)
 - [geojson (points)](https://gocarta.s3.us-east-2.amazonaws.com/public/data/clever_vehicle_locations/v1/data.points.geojson)
+- [geoparquet](https://gocarta.s3.us-east-2.amazonaws.com/public/data/clever_vehicle_locations/v1/data.parquet)
 - [json](https://gocarta.s3.us-east-2.amazonaws.com/public/data/clever_vehicle_locations/v1/data.json)
 
 ## preview links
 - You can view the dataset on a map using [geojson.io](https://geojson.io/#data=data:text/x-url,https://gocarta.s3.us-east-2.amazonaws.com/public/data/clever_vehicle_locations/v1/data.points.geojson).
-- You can query the data with SQL using [duckdb](https://shell.duckdb.org/#queries=v0,CREATE-TABLE-dataset-AS-SELECT-*-FROM-'s3://gocarta/public/data/clever_vehicle_locations/v1/data.csv'~,Describe-dataset~).
+- You can query the data with SQL using [duckdb](https://shell.duckdb.org/#queries=v0,CREATE-TABLE-dataset-AS-SELECT-*-FROM-'s3://gocarta/public/data/clever_vehicle_locations/v1/data.parquet'~,Describe-dataset~).
 
 ## support
 Post an issue [here](https://github.com/gocarta/dataops-clever-vehicle-locations/issues) or email the package author at DanielDufour@gocarta.org.
