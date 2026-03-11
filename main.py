@@ -26,7 +26,7 @@ params = {"format": "json", "key": CLEVER_BUS_TIME_API_KEY}
 response = requests.get(url, params=params)
 data = response.json()
 rts = [route["rt"] for route in data["bustime-response"]["routes"]]
-print("[dataops-clever-vehicle-locations] got routes:", rts)
+# print("[dataops-clever-vehicle-locations] got routes:", rts)
 
 results = []
 page_size = 10
@@ -56,14 +56,20 @@ for i in range(math.ceil(len(rts) / page_size)):
                     "vehicle_id": bus["vid"],
                     "route": bus["rt"],
                     # "delayed": bus["dly"],
+                    "block_id": bus["tablockid"],
                     "destination": bus["des"],
-                    # "heading": bus["hdg"],
+                    "heading": bus["hdg"],
                     "latitude": float(bus["lat"]),
                     "longitude": float(bus["lon"]),
                     # "mode": bus["mode"],
-                    # "path_id": bus["pid"],
-                    # "speed": float(bus["spd"])
+                    "pattern_id": bus["pid"],
+                    "pattern_distance": bus["pdist"],
+                    "scheduled_start_date": bus["stsd"],
+                    "scheduled_start_time": bus["stst"],
+                    "speed": float(bus["spd"]),
+                    "trip_id": float(bus["tatripid"]),
                     "timestamp": timestamp,
+                    # "zone": bus["zone"]
                 }
             )
 
@@ -72,5 +78,12 @@ client = datablob.DataBlobClient(
     bucket_name=AWS_BUCKET_NAME, bucket_path=AWS_BUCKET_PATH
 )
 
-client.update_dataset(name="clever_vehicle_locations", version="1", data=results, latitude_key="latitude", longitude_key="longitude")
+client.update_dataset(
+    name="clever_vehicle_locations",
+    version="1",
+    data=results,
+    description="Near Real-Time Location of all CARTA Buses and Shuttles",
+    latitude_key="latitude",
+    longitude_key="longitude",
+)
 print(f"[dataops-clever-vehicle-locations] updated {len(results)} rows")
