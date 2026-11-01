@@ -78,10 +78,28 @@ client = datablob.DataBlobClient(
     bucket_name=AWS_BUCKET_NAME, bucket_path=AWS_BUCKET_PATH
 )
 
+column_names = [
+    "vehicle_id",
+    "route",
+    "block_id",
+    "destination",
+    "heading",
+    "latitude",
+    "longitude",
+    "pattern_id",
+    "pattern_distance",
+    "scheduled_start_date",
+    "scheduled_start_time",
+    "speed",
+    "trip_id",
+    "timestamp"
+]
+
 client.update_dataset(
     name="clever_vehicle_locations",
     version="1",
     data=results,
+    column_names=column_names,
     description="Near Real-Time Location of all CARTA Buses and Shuttles",
     latitude_key="latitude",
     longitude_key="longitude",
