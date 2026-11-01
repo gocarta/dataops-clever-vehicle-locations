@@ -92,7 +92,7 @@ column_names = [
     "scheduled_start_time",
     "speed",
     "trip_id",
-    "timestamp"
+    "timestamp",
 ]
 
 client.update_dataset(
